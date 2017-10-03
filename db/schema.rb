@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003010518) do
+ActiveRecord::Schema.define(version: 20171003041431) do
 
   create_table "episodes", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "description", limit: 10000
@@ -35,6 +35,13 @@ ActiveRecord::Schema.define(version: 20171003010518) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["episode_id"], name: "fk_rails_59a55b8e18"
+  end
+
+  create_table "us_states", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name", limit: 30, null: false
+    t.string "short_code", limit: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "events", "episodes"
