@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  fatality_date: 2017-10-03
+  age: 1
+  sex: MyString
+  location: MyString
+  event_id: 1
+  references: 
+
+two:
+  id: 1
+  fatality_date: 2017-10-03
+  age: 1
+  sex: MyString
+  location: MyString
+  event_id: 1
+  references: 

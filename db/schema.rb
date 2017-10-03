@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003051433) do
+ActiveRecord::Schema.define(version: 20171003051926) do
 
   create_table "counties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "fips", null: false, unsigned: true
@@ -47,6 +47,17 @@ ActiveRecord::Schema.define(version: 20171003051433) do
     t.index ["episode_id"], name: "fk_rails_59a55b8e18"
   end
 
+  create_table "fatalities", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.date "fatality_date"
+    t.integer "age", limit: 1
+    t.string "sex", limit: 1
+    t.string "location", limit: 40
+    t.integer "event_id", unsigned: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "fk_rails_3c63bb334b"
+  end
+
   create_table "forecast_offices", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "id", limit: 3, null: false
     t.string "name", limit: 35, null: false
@@ -78,6 +89,7 @@ ActiveRecord::Schema.define(version: 20171003051433) do
 
   add_foreign_key "counties", "us_states"
   add_foreign_key "events", "episodes"
+  add_foreign_key "fatalities", "events"
   add_foreign_key "forecast_offices", "us_states"
   add_foreign_key "locations", "events"
 end
