@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003044012) do
+ActiveRecord::Schema.define(version: 20171003050546) do
 
   create_table "counties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "fips", null: false, unsigned: true
@@ -47,6 +47,15 @@ ActiveRecord::Schema.define(version: 20171003044012) do
     t.index ["episode_id"], name: "fk_rails_59a55b8e18"
   end
 
+  create_table "forecast_offices", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "id", limit: 3, null: false
+    t.string "name", limit: 35, null: false
+    t.integer "us_state_id", unsigned: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["us_state_id"], name: "fk_rails_d37164e403"
+  end
+
   create_table "us_states", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", limit: 30, null: false
     t.string "short_code", limit: 2
@@ -56,4 +65,5 @@ ActiveRecord::Schema.define(version: 20171003044012) do
 
   add_foreign_key "counties", "us_states"
   add_foreign_key "events", "episodes"
+  add_foreign_key "forecast_offices", "us_states"
 end
