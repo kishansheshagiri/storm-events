@@ -1,0 +1,87 @@
+<%= form_with(model: event, local: true) do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :id %>
+    <%= form.number_field :id, id: :event_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :storm_type %>
+    <%= form.text_field :storm_type, id: :event_storm_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :begin_time %>
+    <%= form.datetime_select :begin_time, id: :event_begin_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_time %>
+    <%= form.datetime_select :end_time, id: :event_end_time %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state_fips %>
+    <%= form.text_field :state_fips, id: :event_state_fips %>
+  </div>
+
+  <div class="field">
+    <%= form.label :county_fips %>
+    <%= form.text_field :county_fips, id: :event_county_fips %>
+  </div>
+
+  <div class="field">
+    <%= form.label :source %>
+    <%= form.text_field :source, id: :event_source %>
+  </div>
+
+  <div class="field">
+    <%= form.label :forecast_office %>
+    <%= form.text_field :forecast_office, id: :event_forecast_office %>
+  </div>
+
+  <div class="field">
+    <%= form.label :magnitude %>
+    <%= form.text_field :magnitude, id: :event_magnitude %>
+  </div>
+
+  <div class="field">
+    <%= form.label :magnitude_type %>
+    <%= form.text_field :magnitude_type, id: :event_magnitude_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :property_damage %>
+    <%= form.text_field :property_damage, id: :event_property_damage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :crop_damage %>
+    <%= form.text_field :crop_damage, id: :event_crop_damage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :narrative %>
+    <%= form.text_field :narrative, id: :event_narrative %>
+  </div>
+
+  <div class="field">
+    <%= form.label :episode_id %>
+    <%= form.text_field :episode_id, id: :event_episode_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

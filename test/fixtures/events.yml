@@ -1,0 +1,33 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  storm_type: 
+  begin_time: 2017-10-02 20:05:18
+  end_time: 2017-10-02 20:05:18
+  state_fips: 
+  county_fips: 
+  source: MyString
+  forecast_office: MyString
+  magnitude: 1.5
+  magnitude_type: MyString
+  property_damage: 1.5
+  crop_damage: 1.5
+  narrative: MyString
+  episode: one
+
+two:
+  id: 1
+  storm_type: 
+  begin_time: 2017-10-02 20:05:18
+  end_time: 2017-10-02 20:05:18
+  state_fips: 
+  county_fips: 
+  source: MyString
+  forecast_office: MyString
+  magnitude: 1.5
+  magnitude_type: MyString
+  property_damage: 1.5
+  crop_damage: 1.5
+  narrative: MyString
+  episode: two

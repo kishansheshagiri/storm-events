@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Id:</strong>
+  <%= @event.id %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @event.storm_type %>
+</p>
+
+<p>
+  <strong>Begin time:</strong>
+  <%= @event.begin_time %>
+</p>
+
+<p>
+  <strong>End time:</strong>
+  <%= @event.end_time %>
+</p>
+
+<p>
+  <strong>State fips:</strong>
+  <%= @event.state_fips %>
+</p>
+
+<p>
+  <strong>County fips:</strong>
+  <%= @event.county_fips %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @event.source %>
+</p>
+
+<p>
+  <strong>Forecast office:</strong>
+  <%= @event.forecast_office %>
+</p>
+
+<p>
+  <strong>Magnitude:</strong>
+  <%= @event.magnitude %>
+</p>
+
+<p>
+  <strong>Magnitude type:</strong>
+  <%= @event.magnitude_type %>
+</p>
+
+<p>
+  <strong>Property damage:</strong>
+  <%= @event.property_damage %>
+</p>
+
+<p>
+  <strong>Crop damage:</strong>
+  <%= @event.crop_damage %>
+</p>
+
+<p>
+  <strong>Narrative:</strong>
+  <%= @event.narrative %>
+</p>
+
+<p>
+  <strong>Episode:</strong>
+  <%= @event.episode %>
+</p>
+
+<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Back', events_path %>
