@@ -10,46 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20171003005100) do
 
-  create_table "Damages", primary_key: "EventId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.float "Property", limit: 24
-    t.float "Crop", limit: 24
-  end
-
-  create_table "EventNarrative", primary_key: "EventId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "Narrative", limit: 5000, null: false
-  end
-
-  create_table "EventType", primary_key: "EventId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "Type", limit: 25
-  end
-
-  create_table "Fatalities", primary_key: "FatalityId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "Date", null: false
-    t.integer "Age"
-    t.string "Sex", limit: 1
-    t.string "Location", limit: 40, null: false
-  end
-
-  create_table "FatalitiesMap", primary_key: "FatalityId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "EventId"
-  end
-
-  create_table "Locations", primary_key: "EventId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.float "BeginLat", limit: 24, null: false
-    t.float "BeginLong", limit: 24, null: false
-    t.float "EndLat", limit: 24, null: false
-    t.float "EndLong", limit: 24, null: false
-  end
-
-  create_table "StormEvents", primary_key: "EventId", id: :integer, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.datetime "BeginTime"
-    t.datetime "EndTime"
-    t.string "Timezone", limit: 10
-    t.string "Source", limit: 30
-    t.string "County", limit: 150
-    t.string "State", limit: 20
+  create_table "episodes", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "description", limit: 10000
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
