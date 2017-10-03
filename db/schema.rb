@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003041431) do
+ActiveRecord::Schema.define(version: 20171003044012) do
+
+  create_table "counties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "fips", null: false, unsigned: true
+    t.integer "us_state_id", null: false, unsigned: true
+    t.string "name", limit: 30
+    t.string "timezone", limit: 6
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["us_state_id"], name: "fk_rails_7816ccbf42"
+  end
 
   create_table "episodes", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "description", limit: 10000
@@ -44,5 +54,6 @@ ActiveRecord::Schema.define(version: 20171003041431) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "counties", "us_states"
   add_foreign_key "events", "episodes"
 end
