@@ -5,20 +5,12 @@
 <table>
   <thead>
     <tr>
-      <th>Id</th>
-      <th>Type</th>
+      <th>Event ID</th>
+      <th>Strom Type</th>
+      <th>County</th>
+      <th>State</th>
       <th>Begin time</th>
-      <th>End time</th>
-      <th>State fips</th>
-      <th>County fips</th>
       <th>Source</th>
-      <th>Forecast office</th>
-      <th>Magnitude</th>
-      <th>Magnitude type</th>
-      <th>Property damage</th>
-      <th>Crop damage</th>
-      <th>Narrative</th>
-      <th>Episode</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,18 +20,10 @@
       <tr>
         <td><%= event.id %></td>
         <td><%= event.storm_type %></td>
+        <td><%= event.county_name %></td>
+        <td><%= event.state_name %></td>
         <td><%= event.begin_time %></td>
-        <td><%= event.end_time %></td>
-        <td><%= event.state_fips %></td>
-        <td><%= event.county_fips %></td>
         <td><%= event.source %></td>
-        <td><%= event.forecast_office %></td>
-        <td><%= event.magnitude %></td>
-        <td><%= event.magnitude_type %></td>
-        <td><%= event.property_damage %></td>
-        <td><%= event.crop_damage %></td>
-        <td><%= event.narrative %></td>
-        <td><%= event.episode_id %></td>
         <td><%= link_to 'Show', event %></td>
         <td><%= link_to 'Edit', edit_event_path(event) %></td>
         <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
