@@ -1,7 +1,7 @@
 class Event < ApplicationRecord
   belongs_to :episode
-  has_many :locations
-  has_many :fatalities
+  has_many :locations, dependent: :destroy
+  has_many :fatalities, dependent: :destroy
 
   def self.getRecords
     find_by_sql("SELECT e.id as id, storm_type,
