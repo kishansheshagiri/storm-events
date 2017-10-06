@@ -1,14 +1,9 @@
 Rails.application.routes.draw do
-  get 'episodes/home'
-
-  get 'episodes/events'
-
-  get 'episodes/help'
-
-  get 'episodes/about'
+  root 'episodes#home'
+  get '/events', to: 'episodes#events'
+  get '/help', to: 'episodes#help'
+  get '/about', to: 'episodes#about'
+  get '/contact', to: 'episodes#contact'
 
   resources :events
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
-  root "episodes#home"
 end

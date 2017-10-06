@@ -1,2 +1,10 @@
-<h1>Episodes#home</h1>
-<p>Find me in app/views/episodes/home.html.erb</p>
+<div class="center jumbotron">
+  <% provide(:title, "Home") %>
+  <h1>Storm Event Reporter</h1>
+  <h2>
+    <p>
+      This is the home page for the Storm Event reporter.
+    </p>
+  </h2>
+  <%= link_to "Events", '#', class: "btn btn-lg btn-primary" %>
+</div>
