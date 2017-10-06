@@ -2,6 +2,37 @@ class Event < ApplicationRecord
   belongs_to :episode
   has_many :locations, dependent: :destroy
   has_many :fatalities, dependent: :destroy
+  attr_accessor :county_name, :state_name, :episode_narrative
+
+  after_initialize do
+    self.county_name = nil unless @attributes.key?("county_name")
+    self.state_name = nil unless @attributes.key?("state_name")
+    self.episode_narrative = nil unless @attributes.key?("episode_narrative")
+  end
+
+  def county_name
+    @attributes["county_name"].value
+  end
+
+  def county_name=(value)
+    @attributes["county_name"] = value
+  end
+
+  def state_name
+    @attributes["state_name"].value
+  end
+
+  def state_name=(value)
+    @attributes["state_name"] = value
+  end
+
+  def episode_narrative
+    @attributes["episode_narrative"].value
+  end
+
+  def episode_narrative=(value)
+    @attributes["episode_narrative"] = value
+  end
 
   def self.getRecords
     find_by_sql("SELECT e.id as id, storm_type,
