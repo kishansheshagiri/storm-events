@@ -32,13 +32,10 @@
   </div>
 
   <div class="field">
-    <%= form.label :state_fips %>
-    <%= form.text_field :state_fips, id: :event_state_fips %>
-  </div>
-
-  <div class="field">
-    <%= form.label :county_fips %>
-    <%= form.text_field :county_fips, id: :event_county_fips %>
+    <%= form.label :state %>
+    <%= collection_select(:dropdown_us_state_name, :event_id, UsState.all, :id, :name, :selected => state_id = UsState.where(:name => @event.state_name).ids)%>
+    <%= form.label :county %>
+    <%= collection_select(:dropdown_us_county_name, :event_id, County.where(:us_state_id => UsState.where(:name => @event.state_name)), :id, :name) %>
   </div>
 
   <div class="field">

@@ -61,6 +61,13 @@ class EventsController < ApplicationController
     end
   end
 
+  def counties_for_state
+    val = params[:us_state_id]
+    @counties = County.where(:us_state_id => val)
+    options = @counties.map{|x| "#{x.id} : '#{x.name}'"}
+    render :json => [ @counties.to_json], :status => 200
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_event
