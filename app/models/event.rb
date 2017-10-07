@@ -35,15 +35,14 @@ class Event < ApplicationRecord
   end
 
   def self.getRecords(page)
-    paginate_by_sql("SELECT e.id as id, storm_type,
+    find_by_sql("SELECT e.id as id, storm_type,
           c.name as county_name, c.timezone as timezone, s.name as state_name,
           begin_time, source, property_damage, crop_damage
         FROM events e
         INNER JOIN us_states s
           ON e.state_fips = s.id
         INNER JOIN counties c
-          ON e.county_fips = c.fips AND e.state_fips = c.us_state_id",
-        page: page, per_page: 10)
+          ON e.county_fips = c.fips AND e.state_fips = c.us_state_id")
   end
 
   def self.getDetails(id)

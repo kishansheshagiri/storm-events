@@ -22,6 +22,7 @@ gem 'jquery-rails'
 ## Gemfile for Rails 3+, Sinatra, and Merb
 gem 'will_paginate', '~> 3.1.0'
 gem 'will_paginate-bootstrap'
+gem 'jquery-datatables-rails', '~> 3.4.0'
 
 # Use Haml as the templating library
 gem 'haml'

@@ -1,7 +1,6 @@
 jQuery(document).ready(function(){
   var batchNo = jQuery('.batch').html();
   jQuery('#dropdown_us_state_name_event_id').on('change load',function() {
-    console.log("Kishan")
     var url = '/get_counties_dropdown?us_state_id=' + $(this).val()
     $('#dropdown_us_county_name_event_id').empty()
     $.get(url, function(data) {
