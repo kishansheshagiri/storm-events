@@ -34,16 +34,16 @@ class Event < ApplicationRecord
     @attributes["episode_narrative"] = value
   end
 
-  def self.getRecords
-    find_by_sql("SELECT e.id as id, storm_type,
+  def self.getRecords(page)
+    paginate_by_sql("SELECT e.id as id, storm_type,
           c.name as county_name, s.name as state_name,
           begin_time, source
         FROM events e
         INNER JOIN us_states s
           ON e.state_fips = s.id
         INNER JOIN counties c
-          ON e.county_fips = c.fips AND e.state_fips = c.us_state_id
-        LIMIT 10")
+          ON e.county_fips = c.fips AND e.state_fips = c.us_state_id",
+        page: page, per_page: 10)
   end
 
   def self.getDetails(id)

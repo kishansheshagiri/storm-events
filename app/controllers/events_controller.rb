@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.getRecords
+    @events = Event.getRecords(params[:page])
   end
 
   # GET /events/1

@@ -14,17 +14,8 @@
   </div>
     <div class="panel-footer">
     <div class="row">
-      <div class="col col-xs-4" style="margin-top: 6px">Page 1 of 5</div>
       <div class="col col-xs-8">
-        <ul class="pagination hidden-xs pull-right" style="margin-top: 0px; margin-bottom: 0px ">
-          <li><a href="#">1</a></li>
-          <li><a href="#">2</a></li>
-          <li><a href="#">3</a></li>
-          <li><a href="#">4</a></li>
-          <li><a href="#">5</a></li>
-          <li><a href="#">«</a></li>
-          <li><a href="#">»</a></li>
-        </ul>
+          <%= will_paginate @events, renderer: BootstrapPagination::Rails %>
       </div>
     </div>
   </div>
