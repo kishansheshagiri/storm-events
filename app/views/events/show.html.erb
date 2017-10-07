@@ -2,7 +2,7 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Id:</strong>
+  <strong>Event ID:</strong>
   <%= @event.id %>
 </p>
 
@@ -22,13 +22,18 @@
 </p>
 
 <p>
-  <strong>State fips:</strong>
-  <%= @event.state_fips %>
+  <strong>County FIPS:</strong>
+  <%= @event.county_fips %>
+
+  <strong>County Name:</strong>
+  <%= @event.county_name %>
 </p>
 
 <p>
-  <strong>County fips:</strong>
-  <%= @event.county_fips %>
+  <strong>State FIPS:</strong>
+  <%= @event.state_fips %>
+  <strong>State Name:</strong>
+  <%= @event.state_name %>
 </p>
 
 <p>
@@ -52,12 +57,12 @@
 </p>
 
 <p>
-  <strong>Property damage:</strong>
+  <strong>Property damage (In thousand USD):</strong>
   <%= @event.property_damage %>
 </p>
 
 <p>
-  <strong>Crop damage:</strong>
+  <strong>Crop damage (In thousand USD):</strong>
   <%= @event.crop_damage %>
 </p>
 
@@ -68,7 +73,10 @@
 
 <p>
   <strong>Episode:</strong>
-  <%= @event.episode %>
+  <%= @event.episode.id %>
+  <br/>
+  <strong>Episode Narrative:</strong>
+  <%= @event.episode.description %>
 </p>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
