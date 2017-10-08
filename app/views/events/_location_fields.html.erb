@@ -1,0 +1,30 @@
+<p>
+  <div class="form-group">
+    <%= f.label :loc_range, 'Range', class: "col-md-1 control-label" %>
+    <div class="col-xs-1">
+      <%= f.text_field :loc_range, id: :location_loc_range, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :azimuth, class: "col-md-1 control-label" %>
+    <div class="col-xs-1">
+      <%= f.text_field :azimuth, id: :location_azimuth, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :location, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.text_field :location, id: :location_location, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :latitude, class: "col-md-1 control-label" %>
+    <div class="col-md-1">
+      <%= f.text_field :latitude, id: :location_latitude, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :longitude, class: "col-md-1 control-label" %>
+    <div class="col-md-1">
+      <%= f.text_field :longitude, id: :location_longitude, class: "form-control input-md" %>
+    </div>
+
+    <%= f.remove_nested_fields_link%>
+  </div>
+</p>

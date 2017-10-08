@@ -1,0 +1,25 @@
+<p>
+  <div class="form-group">
+    <%= f.label :date, class: "col-md-1 control-label" %>
+    <div class="form-group form-inline col-md-3">
+      <%= f.date_select :fatality_date, { order: [:day, :month, :year] }, { id: :fatality_fatality_date, class: "form-control input-md" } %>
+    </div>
+
+    <%= f.label :age, class: "col-md-1 control-label" %>
+    <div class="col-xs-1">
+      <%= f.number_field :age, id: :fatality_age, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :sex, class: "col-md-1 control-label" %>
+    <div class="col-md-1">
+      <%= f.text_field :sex, id: :fatality_sex, class: "form-control input-md" %>
+    </div>
+
+    <%= f.label :location, class: "col-md-1 control-label" %>
+    <div class="col-md-2">
+      <%= f.text_field :location, id: :fatality_location, class: "form-control input-md" %>
+    </div>
+
+    <%= f.remove_nested_fields_link%>
+  </div>
+</p>

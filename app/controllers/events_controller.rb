@@ -76,6 +76,10 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:id, :storm_type, :begin_time, :end_time, :state_fips, :county_fips, :source, :forecast_office, :magnitude, :magnitude_type, :property_damage, :crop_damage, :narrative, :episode_id)
+      params.require(:event).permit(:id, :storm_type, :begin_time, :end_time, :state_fips,
+          :county_fips, :source, :forecast_office, :magnitude, :magnitude_type,
+          :property_damage, :crop_damage, :narrative, :episode_id,
+          locations_attributes: [:id, :event_id, :location_index, :loc_range, :azimuth, :location, :latitude, :longitude, :_destroy],
+          fatalities_attributes: [:id, :fatality_date, :age, :sex, :location, :_destroy])
     end
 end

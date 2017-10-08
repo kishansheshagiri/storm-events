@@ -1,0 +1,133 @@
+<%= form_with(model: event, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if event.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
+
+      <ul>
+      <% event.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <!-- <fieldset> -->
+
+  <!-- Event ID-->
+  <div class="form-group">
+    <%= form.label :id, 'Event ID', class: "col-md-4 control-label" %>
+    <div class="col-md-4">
+      <%= form.number_field :id, id: :event_id, class: "form-control input-md", placeholder: "Event ID", required: "" %>
+    </div>
+  </div>
+
+  <!-- Storm Type-->
+  <div class="form-group">
+    <%= form.label :storm_type, 'Storm Type', class: "col-md-4 control-label" %>
+    <div class="col-md-3">
+      <%= form.text_field :storm_type, id: :event_storm_type, class: "form-control input-md", placeholder: "Thunderstorm Wind, Flood, etc.", required: "" %>
+    </div>
+  </div>
+
+  <!-- Begin Time-->
+  <div class="form-group form-inline">
+    <%= form.label :begin_time, 'Begin Time', class: "col-md-4 control-label" %>
+    <div class="col-md-8">
+      <%= form.datetime_select :begin_time, { order: [:day, :month, :year] }, { id: :event_begin_time, class: "form-control input-md"} %>
+    </div>
+  </div>
+
+  <!-- End Time-->
+  <div class="form-group form-inline">
+    <%= form.label :end_time, 'End Time', class: "col-md-4 control-label" %>
+    <div class="col-md-8">
+      <%= form.datetime_select :end_time, { order: [:day, :month, :year] }, { id: :event_end_time, class: "form-control input-md"} %>
+    </div>
+  </div>
+
+
+  <!-- Source-->
+  <div class="form-group">
+    <%= form.label :storm_type, 'Source', class: "col-md-4 control-label" %> 
+    <div class="col-md-4">
+      <%= form.text_field :source, id: :event_source, class: "form-control input-md", placeholder: "Law Enforcement, Trained Spotter, etc.", required: "" %>
+    </div>
+  </div>
+
+  <!-- State -->
+  <div class="form-group">
+    <%= form.label :state, class: "col-md-4 control-label", for: "selectbasic" %>
+    <div class="col-md-4">
+      <%= collection_select(:event, :state_fips, UsState.all, :id, :name, { :selected => state_id = UsState.where(:name => @event.state_name).ids }, { class: "form-control" } )%>
+    </div>
+  </div>
+
+  <!-- County -->
+  <div class="form-group">
+    <%= form.label :county, class: "col-md-4 control-label", for: "selectbasic" %>
+    <div class="col-md-4">
+      <%= collection_select(:event, :county_fips, County.where(:us_state_id => UsState.where(:name => @event.state_name)), :fips, :name, {:selected => county_id = County.where(:name => @event.county_name).ids}, { class: "form-control" } ) %>
+    </div>
+  </div>
+
+  <!-- Locations -->
+  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">Locations</legend>
+  <%= form.nested_fields_for(:locations, { class: "form-horizontal" }) do |form_loc| %>
+    <%= render "location_fields", :f => form_loc %>
+  <% end %>
+  <%= form.add_nested_fields_link :locations %>
+
+  <!-- Forecast Office -->
+  <div class="form-group">
+    <%= form.label :forecast_office, 'Forecast Office', class: "col-md-4 control-label", for: "selectbasic" %>
+    <div class="col-md-4">
+      <%= collection_select(:event, :forecast_office, ForecastOffice.all, :id, :name, { :selected => @event.forecast_office }, { class: "form-control" } )%>
+    </div>
+  </div>
+
+  <!-- Magnitude-->
+  <div class="form-group">
+    <%= form.label :magnitude, class: "col-md-4 control-label" %>
+    <div class="col-md-2">
+      <%= form.number_field :magnitude, id: :event_magnitude, class: "form-control input-md", placeholder: "Magnitude" %>
+    </div>
+  </div>
+
+  <!-- Magnitude Type-->
+  <div class="form-group">
+    <%= form.label :magnitude_type, 'Magnitude Type', class: "col-md-4 control-label" %>
+    <div class="col-md-2">
+      <%= form.text_field :magnitude_type, id: :event_magnitude_type, class: "form-control input-md", placeholder: "MG, EG, etc." %>
+    </div>
+  </div>
+
+  <!-- Property Damage-->
+  <div class="form-group">
+    <%= form.label :property_damage, 'Property Damage (In 1000 USD)', class: "col-md-4 control-label" %>
+    <div class="col-md-2">
+      <%= form.text_field :property_damage, id: :event_property_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc." %>
+    </div>
+  </div>
+
+  <!-- Crop Damage-->
+  <div class="form-group">
+    <%= form.label :crop_damage, 'Crop Damage (In 1000 USD)', class: "col-md-4 control-label" %>
+    <div class="col-md-2">
+      <%= form.text_field :crop_damage, id: :event_crop_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc." %>
+    </div>
+  </div>
+
+  <!-- Fatalities -->
+  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">Fatalities</legend>
+  <%= form.nested_fields_for(:fatalities, { class: "form-horizontal" }) do |form_loc| %>
+    <%= render "fatality_fields", :f => form_loc %>
+  <% end %>
+  <%= form.add_nested_fields_link :fatalities %>
+
+
+  <div class="actions">
+    <%= form.submit 'Submit', class: "btn btn-success" %>
+  </div>
+
+  <!-- </fieldset> -->
+<% end %>
+

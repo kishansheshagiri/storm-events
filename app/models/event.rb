@@ -2,6 +2,9 @@ class Event < ApplicationRecord
   belongs_to :episode
   has_many :locations, dependent: :destroy
   has_many :fatalities, dependent: :destroy
+  accepts_nested_attributes_for :locations, allow_destroy: true
+  accepts_nested_attributes_for :fatalities, allow_destroy: true
+  accepts_nested_attributes_for :episode
   attr_accessor :county_name, :state_name, :episode_narrative
 
   after_initialize do

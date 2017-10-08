@@ -1,11 +1,11 @@
 jQuery(document).ready(function(){
   var batchNo = jQuery('.batch').html();
-  jQuery('#dropdown_us_state_name_event_id').on('change load',function() {
+  jQuery('#event_state_fips').on('change load',function() {
     var url = '/get_counties_dropdown?us_state_id=' + $(this).val()
-    $('#dropdown_us_county_name_event_id').empty()
+    $('#event_county_fips').empty()
     $.get(url, function(data) {
       $.each(JSON.parse(data), function(index, item) {
-        $('#dropdown_us_county_name_event_id').append(new Option(item.name, item.fips));
+        $('#event_county_fips').append(new Option(item.name, item.fips));
       });
     });
   })
