@@ -57,7 +57,7 @@
   <div class="form-group">
     <%= form.label :state, class: "col-md-4 control-label", for: "selectbasic" %>
     <div class="col-md-4">
-      <%= collection_select(:event, :state_fips, UsState.all, :id, :name, { :selected => state_id = UsState.where(:name => @event.state_name).ids }, { class: "form-control" } )%>
+      <%= collection_select(:event, :state_fips, UsState.all, :id, :name, { selected: @event.state_fips }, { class: "form-control" } )%>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
   <div class="form-group">
     <%= form.label :county, class: "col-md-4 control-label", for: "selectbasic" %>
     <div class="col-md-4">
-      <%= collection_select(:event, :county_fips, County.where(:us_state_id => UsState.where(:name => @event.state_name)), :fips, :name, {:selected => county_id = County.where(:name => @event.county_name).ids}, { class: "form-control" } ) %>
+      <%= collection_select(:event, :county_fips, County.where(us_state_id: @event.state_fips), :fips, :name, {}, { class: "form-control" } ) %>
     </div>
   </div>
 
@@ -122,6 +122,14 @@
     <%= render "fatality_fields", :f => form_loc %>
   <% end %>
   <%= form.add_nested_fields_link :fatalities %>
+
+  <!-- Episode-->
+  <div class="form-group">
+    <%= form.label :episode_id, 'Episode ID', class: "col-md-4 control-label" %>
+    <div class="col-md-2">
+      <%= form.text_field :episode_id, id: :event_episode_id, class: "form-control" %>
+    </div>
+  </div>
 
 
   <div class="actions">
