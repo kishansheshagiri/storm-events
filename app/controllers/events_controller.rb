@@ -80,6 +80,6 @@ class EventsController < ApplicationController
           :county_fips, :source, :forecast_office, :magnitude, :magnitude_type,
           :property_damage, :crop_damage, :narrative, :episode_id,
           locations_attributes: [:id, :event_id, :location_index, :loc_range, :azimuth, :location, :latitude, :longitude, :_destroy],
-          fatalities_attributes: [:id, :fatality_date, :age, :sex, :location, :_destroy])
+          fatalities_attributes: [:fatality_id, :fatality_date, :age, :sex, :location, :_destroy])
     end
 end

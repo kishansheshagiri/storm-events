@@ -1,5 +1,10 @@
 <p>
   <div class="form-group">
+    <%= f.label :fatality_id, 'ID', class: "col-md-1 control-label" %>
+    <div class="col-xs-1">
+      <%= f.number_field :fatality_id, id: :fatality_fatality_id, class: "form-control input-md" %>
+    </div>
+
     <%= f.label :date, class: "col-md-1 control-label" %>
     <div class="form-group form-inline col-md-3">
       <%= f.date_select :fatality_date, { order: [:day, :month, :year] }, { id: :fatality_fatality_date, class: "form-control input-md" } %>
@@ -16,7 +21,7 @@
     </div>
 
     <%= f.label :location, class: "col-md-1 control-label" %>
-    <div class="col-md-2">
+    <div class="col-md-1">
       <%= f.text_field :location, id: :fatality_location, class: "form-control input-md" %>
     </div>
 
