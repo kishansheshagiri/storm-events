@@ -16,7 +16,7 @@
     <table class="table table-hover table-bordered table-list" id="episodes-table" >
       <thead>
         <tr>
-          <th style="width: 70px">Episode ID</th>
+          <th style="width: 70px">Episode</th>
           <th>Description</th>
           <th style="text-align: center"> Actions </th>
         </tr>
@@ -25,9 +25,9 @@
       <tbody>
         <% @episodes.each do |episode| %>
           <tr>
-            <td><%= episode.id %></td>
+            <td><%= link_to episode.id, episode %></td>
             <td><%= episode.description %></td>
-            <td><%= link_to 'Show', episode %><%= link_to ' Edit', edit_episode_path(episode) %></td>
+            <td style="width: 80px"><%= link_to ' Edit', edit_episode_path(episode), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', episode, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
           </tr>
         <% end %>
       </tbody>

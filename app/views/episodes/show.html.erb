@@ -18,5 +18,7 @@
   <% end %>
 </p>
 
-<%= link_to 'Edit', edit_episode_path(@episode) %> |
-<%= link_to 'Back', episodes_path %>
+<p>
+<%= link_to 'Edit', edit_episode_path(@episode), class: "btn btn-primary" %>
+<%= link_to 'Back to Episodes', episodes_path, class: "btn btn-primary" %>
+</p>

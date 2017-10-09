@@ -13,12 +13,14 @@
 
 <p>
   <strong>Begin time:</strong>
-  <%= @event.begin_time %>
+  <%= @event.begin_time.strftime('%a, %b %d, %Y %H:%M') %>
+  <%= " " + @event.timezone %>
 </p>
 
 <p>
   <strong>End time:</strong>
-  <%= @event.end_time %>
+  <%= @event.end_time.strftime('%a, %b %d, %Y %H:%M') %>
+  <%= " " + @event.timezone %>
 </p>
 
 <p>
@@ -43,7 +45,8 @@
 
 <p>
   <strong>Forecast office:</strong>
-  <%= @event.forecast_office %>
+  <%= @event.forecast_office + ", " + @event.forecast_office_name.capitalize + ", " + @event.forecast_office_state.capitalize %>
+
 </p>
 
 <p>
@@ -79,5 +82,7 @@
   <%= @event.episode.description %>
 </p>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+<p>
+<%= link_to 'Edit', edit_event_path(@event), class: "btn btn-primary" %>
+<%= link_to 'Back to Events', events_path, class: "btn btn-primary" %>
+</p>

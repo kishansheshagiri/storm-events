@@ -3,5 +3,7 @@
 
 <%= render 'form2', event: @event %>
 
-<%= link_to 'Show', @event %> |
-<%= link_to 'Back', events_path %>
+<p>
+<%= link_to 'Show Event', @event, class: "btn btn-primary" %>
+<%= link_to 'Back to Events', events_path, class: "btn btn-primary" %>
+</p>

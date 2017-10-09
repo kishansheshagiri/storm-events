@@ -21,7 +21,7 @@ class Event < ApplicationRecord
   def self.getDetails(id)
     @events = find_by_sql("SELECT e.id as id,
           storm_type,
-          c.name as county_name, c.fips as county_fips,
+          c.name as county_name, c.fips as county_fips, c.timezone as timezone,
           s.name as state_name, s.id as state_fips,
           begin_time, end_time, source,
           e.forecast_office as forecast_office,

@@ -3,5 +3,7 @@
 
 <%= render 'form', episode: @episode %>
 
-<%= link_to 'Show', @episode %> |
-<%= link_to 'Back', episodes_path %>
+<p>
+<%= link_to 'Show Episode', @episode, class: "btn btn-primary" %>
+<%= link_to 'Back to Episodes', episodes_path, class: "btn btn-primary" %>
+</p>

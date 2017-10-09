@@ -16,7 +16,7 @@
     <table class="table table-hover table-bordered table-list" id="events-table" >
       <thead>
         <tr>
-          <th style="width: 70px">Event ID</th>
+          <th style="width: 70px">Event</th>
           <th>Strom Type</th>
           <th>County</th>
           <th>State</th>
@@ -30,14 +30,14 @@
       <tbody>
         <% @events.each do |event| %>
           <tr>
-            <td><%= event.id %></td>
+            <td><%= link_to event.id, event %></td>
             <td><%= event.storm_type %></td>
             <td><%= event.county_name %></td>
             <td><%= event.state_name %></td>
             <td><%= event.begin_time.strftime('%b %d, %Y %H:%M') %><%= " " + event.timezone %></td>
             <td><%= event.source %></td>
             <td><%= trim_number(event.property_damage).to_s + "K" %></td>
-            <td><%= link_to 'Show', event %><%= link_to ' Edit', edit_event_path(event) %><%= link_to ' Delete', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td style="width: 80px"><%= link_to ' Edit', edit_event_path(event), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
           </tr>
         <% end %>
       </tbody>
