@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/new'
+
   root 'episodes#home'
   get '/events', to: 'events#index'
   get '/get_counties_dropdown', to: 'events#counties_for_state', defaults: { format: 'js' }

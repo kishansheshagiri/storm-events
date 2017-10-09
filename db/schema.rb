@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009011833) do
+ActiveRecord::Schema.define(version: 20171009213938) do
 
   create_table "counties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "fips", null: false, unsigned: true
@@ -87,9 +87,16 @@ ActiveRecord::Schema.define(version: 20171009011833) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "counties", "us_states"
-  add_foreign_key "events", "episodes"
-  add_foreign_key "fatalities", "events"
-  add_foreign_key "forecast_offices", "us_states"
-  add_foreign_key "locations", "events"
+  create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "counties", "us_states", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "events", "episodes", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fatalities", "events", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "forecast_offices", "us_states", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "locations", "events", on_update: :cascade, on_delete: :cascade
 end
