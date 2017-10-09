@@ -16,7 +16,7 @@
   <div class="form-group">
     <%= form.label :id, 'Event ID', class: "col-md-4 control-label" %>
     <div class="col-md-4">
-      <%= form.number_field :id, id: :event_id, class: "form-control input-md", placeholder: "Event ID", required: "" %>
+      <%= form.number_field :id, id: :event_id, class: "form-control input-md", placeholder: "Event ID", required: "true" %>
     </div>
   </div>
 
@@ -32,7 +32,7 @@
   <div class="form-group form-inline">
     <%= form.label :begin_time, 'Begin Time', class: "col-md-4 control-label" %>
     <div class="col-md-8">
-      <%= form.datetime_select :begin_time, { order: [:day, :month, :year] }, { id: :event_begin_time, class: "form-control input-md"} %>
+      <%= form.datetime_select :begin_time, { order: [:day, :month, :year] }, { id: :event_begin_time, class: "form-control input-md", required: "true"} %>
     </div>
   </div>
 
@@ -57,7 +57,7 @@
   <div class="form-group">
     <%= form.label :state, class: "col-md-4 control-label", for: "selectbasic" %>
     <div class="col-md-4">
-      <%= collection_select(:event, :state_fips, UsState.all, :id, :name, { selected: @event.state_fips }, { class: "form-control" } )%>
+      <%= collection_select(:event, :state_fips, UsState.all, :id, :name, { selected: @event.state_fips }, { class: "form-control", required: "true" } )%>
     </div>
   </div>
 
@@ -65,7 +65,7 @@
   <div class="form-group">
     <%= form.label :county, class: "col-md-4 control-label", for: "selectbasic" %>
     <div class="col-md-4">
-      <%= collection_select(:event, :county_fips, County.where(us_state_id: @event.state_fips), :fips, :name, {}, { class: "form-control" } ) %>
+      <%= collection_select(:event, :county_fips, County.where(us_state_id: @event.state_fips), :fips, :name, {}, { class: "form-control", required: "true" } ) %>
     </div>
   </div>
 
@@ -80,7 +80,7 @@
   <div class="form-group">
     <%= form.label :forecast_office, 'Forecast Office', class: "col-md-4 control-label", for: "selectbasic" %>
     <div class="col-md-4">
-      <%= collection_select(:event, :forecast_office, ForecastOffice.all, :id, :name, { :selected => @event.forecast_office }, { class: "form-control" } )%>
+      <%= collection_select(:event, :forecast_office, ForecastOffice.all, :id, :name, { :selected => @event.forecast_office }, { class: "form-control", required: "true"} )%>
     </div>
   </div>
 
@@ -104,7 +104,7 @@
   <div class="form-group">
     <%= form.label :property_damage, 'Property Damage (In 1000 USD)', class: "col-md-4 control-label" %>
     <div class="col-md-2">
-      <%= form.text_field :property_damage, id: :event_property_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc." %>
+      <%= form.text_field :property_damage, id: :event_property_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc.", value: 0 %>
     </div>
   </div>
 
@@ -112,7 +112,7 @@
   <div class="form-group">
     <%= form.label :crop_damage, 'Crop Damage (In 1000 USD)', class: "col-md-4 control-label" %>
     <div class="col-md-2">
-      <%= form.text_field :crop_damage, id: :event_crop_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc." %>
+      <%= form.text_field :crop_damage, id: :event_crop_damage, class: "form-control input-md", placeholder: "0, 10, 55, 100, etc.", value: 0 %>
     </div>
   </div>
 

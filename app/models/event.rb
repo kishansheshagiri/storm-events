@@ -5,6 +5,7 @@ class Event < ApplicationRecord
   accepts_nested_attributes_for :locations, allow_destroy: true
   accepts_nested_attributes_for :fatalities, allow_destroy: true
   accepts_nested_attributes_for :episode
+  validates :id, presence: true, uniqueness: true
 
   def self.getRecords(page)
     find_by_sql("SELECT e.id as id, storm_type,
