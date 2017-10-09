@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/contact', to: 'episodes#contact'
 
   resources :events
+  resources :episodes
 end

@@ -1,0 +1,40 @@
+<% provide(:title, "Episodes") %>
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-default panel-table" style="margin-top: -25px">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col col-xs-6">
+        <h1 class="panel-title text-left" style="font-size: 32px;">Storm Episodes</h1>
+      </div>
+      <div class="col col-xs-6 text-right">
+        <%= link_to "New Episode", new_episode_path, class: "btn btn-sm btn-primary btn-create" %>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body" style="margin-top: 0px">
+    <table class="table table-hover table-bordered table-list" id="episodes-table" >
+      <thead>
+        <tr>
+          <th style="width: 70px">Episode ID</th>
+          <th>Description</th>
+          <th style="text-align: center"> Actions </th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @episodes.each do |episode| %>
+          <tr>
+            <td><%= episode.id %></td>
+            <td><%= episode.description %></td>
+            <td><%= link_to 'Show', episode %><%= link_to ' Edit', edit_episode_path(episode) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div style="margin-top: -20px">
+    </div>
+  </div>
+</div>
+
+<br>

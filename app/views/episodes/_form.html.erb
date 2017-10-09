@@ -1,0 +1,37 @@
+<%= form_with(model: episode, local: true, html: {class: "form-horizontal"}) do |form| %>
+  <% if episode.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(episode.errors.count, "error") %> prohibited this episode from being saved:</h2>
+
+      <ul>
+      <% episode.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <!-- <fieldset> -->
+
+  <!-- Episode ID-->
+  <div class="form-group">
+    <%= form.label :id, 'Episode ID', class: "col-md-2 control-label" %>
+    <div class="col-md-4">
+      <%= form.number_field :id, id: :episode_id, class: "form-control input-md", placeholder: "Episode ID", required: "true" %>
+    </div>
+  </div>
+
+  <!-- Narrative-->
+  <div class="form-group">
+    <%= form.label :description, class: "col-md-2 control-label" %>
+    <div class="col-md-6">
+      <%= form.text_area :description, id: :episode_description, class: "form-control input-md", placeholder: "Enter description here" %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Submit', class: "btn btn-success" %>
+  </div>
+
+  <!-- </fieldset> -->
+<% end %>
+

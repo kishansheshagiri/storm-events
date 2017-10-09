@@ -1,0 +1,22 @@
+<% provide(:title, "Details") %>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Episode ID:</strong>
+  <%= @episode.id %>
+</p>
+
+<p>
+  <strong>Episode Narrative:</strong>
+  <%= @episode.description %>
+</p>
+
+<p>
+  <strong>Events:</strong>
+  <% @episode.events.each do |event| %>
+    <%= link_to event.id, event %>
+  <% end %>
+</p>
+
+<%= link_to 'Edit', edit_episode_path(@episode) %> |
+<%= link_to 'Back', episodes_path %>
