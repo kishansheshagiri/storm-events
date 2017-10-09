@@ -69,13 +69,6 @@
     </div>
   </div>
 
-  <!-- Locations -->
-  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">Locations</legend>
-  <%= form.nested_fields_for(:locations, { class: "form-horizontal" }) do |form_loc| %>
-    <%= render "location_fields", :f => form_loc %>
-  <% end %>
-  <%= form.add_nested_fields_link :locations %>
-
   <!-- Forecast Office -->
   <div class="form-group">
     <%= form.label :forecast_office, 'Forecast Office', class: "col-md-4 control-label", for: "selectbasic" %>
@@ -116,21 +109,28 @@
     </div>
   </div>
 
-  <!-- Fatalities -->
-  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">Fatalities</legend>
-  <%= form.nested_fields_for(:fatalities, { class: "form-horizontal" }) do |form_loc| %>
-    <%= render "fatality_fields", :f => form_loc %>
-  <% end %>
-  <%= form.add_nested_fields_link :fatalities %>
-
   <!-- Episode-->
   <div class="form-group">
     <%= form.label :episode_id, 'Episode ID', class: "col-md-4 control-label" %>
     <div class="col-md-2">
       <%= form.text_field :episode_id, id: :event_episode_id, class: "form-control" %>
     </div>
+    <h4>Enter an existing episode ID. To enter a new one, add the episode using Episodes link first.</h4>
   </div>
 
+  <!-- Locations -->
+  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">
+    Locations <%= form.add_nested_fields_link :locations, '+', class: "btn btn-primary" %>
+  </legend>
+  <%= form.nested_fields_for(:locations, { class: "form-horizontal" }) do |form_loc| %>
+    <%= render "location_fields", :f => form_loc %>
+  <% end %>
+
+  <!-- Fatalities -->
+  <legend class="col-form-legend" style="font-size: 15px; font-weight: bold">Fatalities <%= form.add_nested_fields_link :fatalities, '+', class: "btn btn-primary"  %></legend>
+    <%= form.nested_fields_for(:fatalities, { class: "form-horizontal" }) do |form_loc| %>
+      <%= render "fatality_fields", :f => form_loc %>
+  <% end %>
 
   <div class="actions">
     <%= form.submit 'Submit', class: "btn btn-success" %>
