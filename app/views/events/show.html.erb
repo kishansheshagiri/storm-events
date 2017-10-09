@@ -73,7 +73,7 @@
 
 <p>
   <strong>Episode:</strong>
-  <%= @event.episode.id %>
+  <%= link_to @event.episode.id, @event.episode %>
   <br/>
   <strong>Episode Narrative:</strong>
   <%= @event.episode.description %>
