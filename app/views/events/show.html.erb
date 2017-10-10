@@ -81,6 +81,20 @@
 </p>
 
 <p>
+  <strong>Fatalities:</strong>
+  <% if @event.fatalities %>
+    <% @event.fatalities.each do |fatality| %>
+      <ul class="list-inline col-md-12">
+        <strong>Date: </strong><%= " " + fatality.fatality_date.strftime('%b %d, %Y') %>
+        <strong>Age: </strong><%= " " + fatality.age.to_s %>
+        <strong>Sex: </strong><%= " " + fatality.sex.to_s %>
+        <strong>Location: </strong><%= " " + fatality.location %>
+      </ul>
+    <% end %>
+  <% end %>
+</p>
+
+<p>
   <strong>Narrative:</strong>
   <%= @event.narrative %>
 </p>
