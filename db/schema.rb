@@ -96,9 +96,9 @@ ActiveRecord::Schema.define(version: 20171010180202) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "counties", "us_states", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "events", "episodes", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "fatalities", "events", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "forecast_offices", "us_states", on_update: :cascade, on_delete: :cascade
-  add_foreign_key "locations", "events", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "counties", "us_states"
+  add_foreign_key "events", "episodes", name: "episode_has_events", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "fatalities", "events", name: "event_has_fatalities", on_update: :cascade, on_delete: :cascade
+  add_foreign_key "forecast_offices", "us_states"
+  add_foreign_key "locations", "events", name: "event_has_locations", on_update: :cascade, on_delete: :cascade
 end
