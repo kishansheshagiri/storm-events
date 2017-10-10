@@ -1,15 +1,15 @@
 $(document).ready(function() {
     $('#events-table').DataTable({
-      "processing": true,
       "ajax": $('#events-table').data('source'),
       "bSortClasses": false,
+      "processing": true,
       "deferRender": true,
     });
     $('#episodes-table').DataTable({
-      "processing": true,
       "ajax": $('#episodes-table').data('source'),
       "pagingType": "full_numbers",
       "bSortClasses": false,
+      "processing": true,
       "deferRender": true,
     });
 } );
