@@ -1,10 +1,10 @@
 <div class="center jumbotron">
   <% provide(:title, "Home") %>
-  <h1>Storm Event Reporter</h1>
+  <h1>Welcome to the storm events reporter!!</h1>
   <h2>
     <p>
-      This is the home page for the Storm Event reporter.
+      You can find the list of all recent weather episodes by clicking <%= link_to "here", episodes_path %>.
     </p>
   </h2>
-  <%= link_to "Checkout the Episodes!", episodes_path, class: "btn btn-lg btn-primary" %>
+  <%= link_to "Admin? Click here!", login_path, class: "btn btn-lg btn-primary" %>
 </div>
