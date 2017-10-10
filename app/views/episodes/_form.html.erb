@@ -16,7 +16,7 @@
   <div class="form-group">
     <%= form.label :id, 'Episode ID', class: "col-md-2 control-label" %>
     <div class="col-md-4">
-      <%= form.number_field :id, id: :episode_id, class: "form-control input-md", placeholder: "Episode ID", required: "true" %>
+      <%= form.number_field :id, id: :episode_id, class: "form-control input-md", placeholder: "Episode ID", required: "true", disabled: episode.persisted? %>
     </div>
   </div>
 

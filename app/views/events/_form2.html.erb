@@ -16,7 +16,7 @@
   <div class="form-group">
     <%= form.label :id, 'Event ID', class: "col-md-4 control-label" %>
     <div class="col-md-4">
-      <%= form.number_field :id, id: :event_id, class: "form-control input-md", placeholder: "Event ID", required: "true" %>
+      <%= form.number_field :id, id: :event_id, class: "form-control input-md", placeholder: "Event ID", required: "true", disabled: event.persisted? %>
     </div>
   </div>
 
