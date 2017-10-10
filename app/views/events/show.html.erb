@@ -1,6 +1,17 @@
 <% provide(:title, "Details") %>
 <p id="notice"><%= notice %></p>
 
+<% if @event.locations %>
+  <div class="pull-right" id="storm-map">
+  </div>
+  <% @event.locations.each do |location| %>
+    <% puts location.latitude %>
+    <%= javascript_tag do %>
+      addMarker(<%= location.latitude %>, <%=location.longitude %>);
+    <% end %>
+  <% end %>
+<% end %>
+
 <p>
   <strong>Event ID:</strong>
   <%= @event.id %>
