@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171009224349) do
+ActiveRecord::Schema.define(version: 20171010180202) do
 
   create_table "counties", id: :integer, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "fips", null: false, unsigned: true
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20171009224349) do
     t.index ["episode_id"], name: "fk_rails_59a55b8e18"
   end
 
-  create_table "fatalities", primary_key: "fatality_id", id: :integer, unsigned: true, default: nil, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+  create_table "fatalities", id: :integer, unsigned: true, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.date "fatality_date"
     t.integer "age", limit: 1
     t.string "sex", limit: 1
@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 20171009224349) do
 
   create_table "locations", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "event_id", null: false, unsigned: true
-    t.integer "location_index", limit: 1
     t.float "loc_range", limit: 24
     t.string "azimuth", limit: 3
     t.string "location", limit: 50

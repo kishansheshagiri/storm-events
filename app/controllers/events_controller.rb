@@ -35,7 +35,7 @@ class EventsController < ApplicationController
     end
 
     respond_to do |format|
-      if @event.save
+      if @event.save_sql(event_params)
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
@@ -97,6 +97,6 @@ class EventsController < ApplicationController
           :county_fips, :source, :forecast_office, :magnitude, :magnitude_type,
           :property_damage, :crop_damage, :narrative, :episode_id,
           locations_attributes: [:id, :event_id, :location_index, :loc_range, :azimuth, :location, :latitude, :longitude, :_destroy],
-          fatalities_attributes: [:fatality_id, :fatality_date, :age, :sex, :location, :_destroy])
+          fatalities_attributes: [:id, :event_id, :fatality_date, :age, :sex, :location, :_destroy])
     end
 end

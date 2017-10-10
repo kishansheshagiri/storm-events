@@ -50,4 +50,61 @@ class Event < ApplicationRecord
           SELECT * FROM fatalities WHERE event_id = #{event.id}")
     end
   end
+
+  def save_sql(params)
+    insert_values = []
+    time_now = Time.now.to_s(:db)
+    puts params[:episode_id]
+
+    episode = Episode.find_by_sql("SELECT * FROM episodes WHERE id = #{params[:episode_id]} LIMIT 1")
+    return false if episode.blank?
+
+    episode_exists = Episode.find_by_sql("SELECT  1 AS one FROM episodes
+        WHERE id = #{params[:episode_id]} AND (id != #{params[:episode_id]}) LIMIT 1")
+
+    return false if !episode_exists.blank?
+    event_exists = Event.find_by_sql("SELECT  1 AS one FROM events WHERE id = #{params[:id]} LIMIT 1")
+
+    return false if !event_exists.blank?
+
+    begin_time = DateTime.new(params["begin_time(1i)"].to_i,
+                              params["begin_time(2i)"].to_i,
+                              params["begin_time(3i)"].to_i,
+                              params["begin_time(4i)"].to_i,
+                              params["begin_time(5i)"].to_i).to_s(:db)
+
+    end_time = DateTime.new(params["end_time(1i)"].to_i,
+                            params["end_time(2i)"].to_i,
+                            params["end_time(3i)"].to_i,
+                            params["end_time(4i)"].to_i,
+                            params["end_time(5i)"].to_i).to_s(:db)
+
+    insert_values.push "(#{params[:id]}, '#{params[:storm_type]}', '#{begin_time}', '#{end_time}',
+        #{params[:state_fips]}, #{params[:county_fips]}, '#{params[:source]}', '#{params[:forecast_office]}',
+        #{params[:magnitude]}, '#{params[:magnitude_type]}', #{params[:property_damage]}, #{params[:crop_damage]},
+        '#{params[:narrative]}', #{params[:episode_id]}, '#{time_now}', '#{time_now}')"
+
+    sql_to_insert = "INSERT INTO events (id, storm_type, begin_time, end_time, state_fips,
+            county_fips, source, forecast_office, magnitude, magnitude_type,
+            property_damage, crop_damage, narrative, episode_id, created_at, updated_at) VALUES #{insert_values.join(", ")}"
+
+    Event.connection.execute(sql_to_insert)
+
+    params[:fatalities_attributes].each do |fatality|
+      fatalities_params = params[:fatalities_attributes]["#{fatality}"]
+      fatalities_params[:event_id] = params[:id]
+
+      @fatality_new = Fatality.new(fatalities_params)
+      @fatality_new.save
+    end
+
+    params[:locations_attributes].each do |location|
+      locations_params = params[:locations_attributes]["#{location}"]
+      locations_params[:event_id] = params[:id]
+
+      @location_new = Location.new(locations_params)
+      @location_new.save
+    end
+
+  end
 end
