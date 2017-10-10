@@ -14,7 +14,11 @@ class EpisodesController < ApplicationController
 
   # GET /episodes/new
   def new
-    @episode = Episode.new
+    if logged_in?
+      @episode = Episode.new
+    else
+      redirect_to login_path
+    end
   end
 
   # GET /episodes/1/edit
@@ -24,7 +28,11 @@ class EpisodesController < ApplicationController
   # POST /episodes
   # POST /episodes.json
   def create
-    @episode = Episode.new(episode_params)
+    if logged_in?
+      @episode = Episode.new(episode_params)
+    else
+      redirect_to login_path
+    end
 
     respond_to do |format|
       if @episode.save
@@ -40,21 +48,30 @@ class EpisodesController < ApplicationController
   # PATCH/PUT /episodes/1
   # PATCH/PUT /episodes/1.json
   def update
-    respond_to do |format|
-      if @episode.update(episode_params)
-        format.html { redirect_to @episode, notice: 'Episode was successfully updated.' }
-        format.json { render :show, status: :ok, location: @episode }
-      else
-        format.html { render :edit }
-        format.json { render json: @episode.errors, status: :unprocessable_entity }
+    if logged_in?
+      respond_to do |format|
+        if @episode.update(episode_params)
+          format.html { redirect_to @episode, notice: 'Episode was successfully updated.' }
+          format.json { render :show, status: :ok, location: @episode }
+        else
+          format.html { render :edit }
+          format.json { render json: @episode.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to login_path
     end
   end
 
   # DELETE /episodes/1
   # DELETE /episodes/1.json
   def destroy
-    @episode.destroy
+    if logged_in?
+      @episode.destroy
+    else
+      redirect_to login_path
+    end
+    
     respond_to do |format|
       format.html { redirect_to episodes_url, notice: 'Episode was successfully deleted.' }
       format.json { head :no_content }

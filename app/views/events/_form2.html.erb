@@ -140,8 +140,12 @@
       <%= render "fatality_fields", :f => form_loc %>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit 'Save', class: "btn btn-success" %>
+  <div class="actions col-md-2">
+    <% if logged_in? %>
+      <%= form.submit 'Save', class: "btn btn-success" %>
+    <% else %>
+      <%= link_to("Login to Save", login_path, target: :_blank, class: "btn btn-sm btn-create btn-default") %>
+    <% end %>
   </div>
 
   <!-- </fieldset> -->

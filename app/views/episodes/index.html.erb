@@ -8,7 +8,11 @@
         <h1 class="panel-title text-left" style="font-size: 32px;">Storm Episodes</h1>
       </div>
       <div class="col col-xs-6 text-right">
-        <%= link_to "New Episode", new_episode_path, class: "btn btn-sm btn-primary btn-create" %>
+        <%=
+          link_to_if(logged_in?, "New Episode",  new_episode_path, class: "btn btn-sm btn-primary btn-create") do
+            link_to("Login to Edit", login_path, target: :_blank, class: "btn btn-sm btn-create btn-default")
+          end
+        %>
       </div>
     </div>
   </div>
@@ -18,7 +22,9 @@
         <tr>
           <th style="width: 70px">Episode</th>
           <th>Description</th>
-          <th style="text-align: center"> Actions </th>
+          <% if logged_in? %>
+            <th style="text-align: center"> Actions </th>
+          <% end %>
         </tr>
       </thead>
 
@@ -27,7 +33,9 @@
           <tr>
             <td><%= link_to episode.id, episode %></td>
             <td><%= episode.description %></td>
-            <td style="width: 80px"><%= link_to ' Edit', edit_episode_path(episode), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', episode, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+            <% if logged_in? %>
+              <td style="width: 80px"><%= link_to ' Edit', edit_episode_path(episode), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', episode, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

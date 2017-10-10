@@ -14,7 +14,11 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
-    @event = Event.new
+    if logged_in?
+      @event = Event.new
+    else
+      redirect_to login_path
+    end
   end
 
   # GET /events/1/edit
@@ -24,7 +28,11 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
+    if logged_in?
+      @event = Event.new(event_params)
+    else
+      redirect_to login_path
+    end
 
     respond_to do |format|
       if @event.save
@@ -40,21 +48,30 @@ class EventsController < ApplicationController
   # PATCH/PUT /events/1
   # PATCH/PUT /events/1.json
   def update
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
+    if logged_in?
+      respond_to do |format|
+        if @event.update(event_params)
+          format.html { redirect_to @event, notice: 'Event was successfully updated.' }
+          format.json { render :show, status: :ok, location: @event }
+        else
+          format.html { render :edit }
+          format.json { render json: @event.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to login_path
     end
   end
 
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    @event.destroy
+    if logged_in?
+      @@event.destroy
+    else
+      redirect_to login_path
+    end
+    
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully deleted.' }
       format.json { head :no_content }

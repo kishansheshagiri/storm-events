@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get 'sessions/new'
-
   get 'users/show'
-
   get 'users/new'
 
   root 'episodes#home'
@@ -13,8 +11,8 @@ Rails.application.routes.draw do
   get '/contact', to: 'episodes#contact'
   get '/signup',  to: 'users#new'
   post '/signup',  to: 'users#create'
-  get    '/login',   to: 'sessions#new'
-  post   '/login',   to: 'sessions#create'
+  get '/login',   to: 'sessions#new'
+  post '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
 
   resources :events

@@ -8,7 +8,11 @@
         <h1 class="panel-title text-left" style="font-size: 32px;">Storm Events</h1>
       </div>
       <div class="col col-xs-6 text-right">
-        <%= link_to "New Event", new_event_path, class: "btn btn-sm btn-primary btn-create" %>
+        <%=
+          link_to_if(logged_in?, "New Event",  new_event_path, class: "btn btn-sm btn-primary btn-create") do
+            link_to("Login to Edit", login_path, target: :_blank, class: "btn btn-sm btn-create btn-default")
+          end
+        %>
       </div>
     </div>
   </div>
@@ -23,7 +27,9 @@
           <th>Begin Time</th>
           <th>Source</th>
           <th>Damages</th>
-          <th style="text-align: center"> Actions </th>
+          <% if logged_in? %>
+            <th style="text-align: center"> Actions </th>
+          <% end %>
         </tr>
       </thead>
 
@@ -37,7 +43,9 @@
             <td><%= event.begin_time.strftime('%b %d, %Y %H:%M') %><%= " " + event.timezone %></td>
             <td><%= event.source %></td>
             <td><%= trim_number(event.property_damage).to_s + "K" %></td>
-            <td style="width: 80px"><%= link_to ' Edit', edit_event_path(event), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+            <% if logged_in? %>
+              <td style="width: 80px"><%= link_to ' Edit', edit_event_path(event), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>
