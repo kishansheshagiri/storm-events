@@ -52,34 +52,19 @@ class Event < ApplicationRecord
   end
 
   def save_sql(params)
+    return false if !params_valid?(params)
+    event_exists = Event.find_by_sql("SELECT  1 AS one FROM events WHERE id = #{params[:id]} LIMIT 1")
+    return false if !event_exists.blank?
     insert_values = []
     time_now = Time.now.to_s(:db)
-    puts params[:episode_id]
 
-    episode = Episode.find_by_sql("SELECT * FROM episodes WHERE id = #{params[:episode_id]} LIMIT 1")
-    return false if episode.blank?
+    begin_time_new = DateTime.new(params["begin_time(1i)"].to_i, params["begin_time(2i)"].to_i,
+        params["begin_time(3i)"].to_i, params["begin_time(4i)"].to_i, params["begin_time(5i)"].to_i).to_s(:db)
 
-    episode_exists = Episode.find_by_sql("SELECT  1 AS one FROM episodes
-        WHERE id = #{params[:episode_id]} AND (id != #{params[:episode_id]}) LIMIT 1")
+    end_time_new = DateTime.new(params["end_time(1i)"].to_i, params["end_time(2i)"].to_i,
+        params["end_time(3i)"].to_i, params["end_time(4i)"].to_i, params["end_time(5i)"].to_i).to_s(:db)
 
-    return false if !episode_exists.blank?
-    event_exists = Event.find_by_sql("SELECT  1 AS one FROM events WHERE id = #{params[:id]} LIMIT 1")
-
-    return false if !event_exists.blank?
-
-    begin_time = DateTime.new(params["begin_time(1i)"].to_i,
-                              params["begin_time(2i)"].to_i,
-                              params["begin_time(3i)"].to_i,
-                              params["begin_time(4i)"].to_i,
-                              params["begin_time(5i)"].to_i).to_s(:db)
-
-    end_time = DateTime.new(params["end_time(1i)"].to_i,
-                            params["end_time(2i)"].to_i,
-                            params["end_time(3i)"].to_i,
-                            params["end_time(4i)"].to_i,
-                            params["end_time(5i)"].to_i).to_s(:db)
-
-    insert_values.push "(#{params[:id]}, '#{params[:storm_type]}', '#{begin_time}', '#{end_time}',
+    insert_values.push "(#{params[:id]}, '#{params[:storm_type]}', '#{begin_time_new}', '#{end_time_new}',
         #{params[:state_fips]}, #{params[:county_fips]}, '#{params[:source]}', '#{params[:forecast_office]}',
         #{params[:magnitude]}, '#{params[:magnitude_type]}', #{params[:property_damage]}, #{params[:crop_damage]},
         '#{params[:narrative]}', #{params[:episode_id]}, '#{time_now}', '#{time_now}')"
@@ -90,21 +75,96 @@ class Event < ApplicationRecord
 
     Event.connection.execute(sql_to_insert)
 
-    params[:fatalities_attributes].each do |fatality|
-      fatalities_params = params[:fatalities_attributes]["#{fatality}"]
-      fatalities_params[:event_id] = params[:id]
+    if params[:fatalities_attributes]
+      params[:fatalities_attributes].each do |fatality|
+        fatalities_params = params[:fatalities_attributes]["#{fatality}"]
+        fatalities_params[:event_id] = params[:id]
 
-      @fatality_new = Fatality.new(fatalities_params)
-      @fatality_new.save
+        @fatality_new = Fatality.new(fatalities_params)
+        @fatality_new.save
+      end
     end
 
-    params[:locations_attributes].each do |location|
-      locations_params = params[:locations_attributes]["#{location}"]
-      locations_params[:event_id] = params[:id]
+    if params[:locations_attributes]
+      params[:locations_attributes].each do |location|
+        locations_params = params[:locations_attributes]["#{location}"]
+        locations_params[:event_id] = params[:id]
 
-      @location_new = Location.new(locations_params)
-      @location_new.save
+        @location_new = Location.new(locations_params)
+        @location_new.save
+      end
     end
 
+    return true
+  end
+
+  def update_sql(params)
+    params[:id] = id
+    return false if !params_valid?(params)
+    update_values = []
+    time_now = Time.now.to_s(:db)
+
+    begin_time_new = DateTime.new(params["begin_time(1i)"].to_i, params["begin_time(2i)"].to_i,
+        params["begin_time(3i)"].to_i, params["begin_time(4i)"].to_i, params["begin_time(5i)"].to_i).to_s(:db)
+
+    end_time_new = DateTime.new(params["end_time(1i)"].to_i, params["end_time(2i)"].to_i,
+        params["end_time(3i)"].to_i, params["end_time(4i)"].to_i, params["end_time(5i)"].to_i).to_s(:db)
+
+    sql_for_update = "UPDATE events SET storm_type = '#{params[:storm_type]}', begin_time = '#{begin_time_new}',
+        end_time = '#{end_time_new}', state_fips = #{params[:state_fips]}, county_fips = #{params[:county_fips]},
+        source = '#{params[:source]}', forecast_office = '#{params[:forecast_office]}', magnitude = #{params[:magnitude]},
+        magnitude_type = '#{params[:magnitude_type]}', property_damage = #{params[:property_damage]},
+        crop_damage = #{params[:crop_damage]}, narrative = '#{params[:narrative]}', episode_id = #{params[:episode_id]},
+        updated_at = '#{time_now}' WHERE id = #{params[:id]}"
+
+    Event.connection.execute(sql_for_update)
+
+    if params[:fatalities_attributes]
+      params[:fatalities_attributes].each do |fatality|
+        fatalities_params = params[:fatalities_attributes]["#{fatality}"]
+        fatalities_params[:event_id] = params[:id]
+
+        fatalities.update(fatalities_params)
+      end
+    end
+
+    if params[:locations_attributes]
+      params[:locations_attributes].each do |location|
+        locations_params = params[:locations_attributes]["#{location}"]
+        locations_params[:event_id] = params[:id]
+
+        locations.update(locations_params)
+      end
+    end
+
+    return true
+  end
+
+  def delete_sql
+    params = Hash.new
+    params[:id] = id
+    params[:episode_id] = episode_id
+    return false if !params_valid?(params)
+
+    event_exists = Event.find_by_sql("SELECT  1 AS one FROM events WHERE id = #{:id} LIMIT 1")
+    return false if event_exists.blank?
+
+    sql_to_delete = "DELETE FROM events WHERE id = #{id}"
+    Event.connection.execute(sql_to_delete)
+
+    return true
+  end
+
+  private
+
+  def params_valid?(params)
+    episode_new = Episode.find_by_sql("SELECT * FROM episodes WHERE id = #{params[:episode_id]} LIMIT 1")
+    return false if episode_new.blank?
+
+    episode_exists = Episode.find_by_sql("SELECT  1 AS one FROM episodes
+        WHERE id = #{params[:episode_id]} AND (id != #{params[:episode_id]}) LIMIT 1")
+    return false if !episode_exists.blank?
+
+    return true
   end
 end
