@@ -44,7 +44,7 @@
             <td><%= event.source %></td>
             <td><%= trim_number(event.property_damage).to_s + "K" %></td>
             <% if logged_in? %>
-              <td style="width: 80px"><%= link_to ' Edit', edit_event_path(event), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to ' X', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+              <td style="width: 80px"><%= link_to ' Edit', edit_event_path(event), class: "btn btn-primary btn-xs", style: "margin-right: 10px" %><%= link_to 'X', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
             <% end %>
           </tr>
         <% end %>

@@ -121,7 +121,7 @@
   <div class="form-group">
     <%= form.label :episode_id, 'Episode ID', class: "col-md-4 control-label" %>
     <div class="col-md-2">
-      <%= form.text_field :episode_id, id: :event_episode_id, class: "form-control" %>
+      <%= collection_select(:event, :episode_id, Episode.all, :id, :id, { :selected => @event.episode_id }, { class: "form-control", required: "true"} )%>
     </div>
     <h4>Enter an existing episode ID. To enter a new one, <%= link_to 'click here', new_episode_path, target: :_blank %></h4>
   </div>

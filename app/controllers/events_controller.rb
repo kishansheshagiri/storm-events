@@ -67,7 +67,7 @@ class EventsController < ApplicationController
   # DELETE /events/1.json
   def destroy
     if logged_in?
-      @@event.destroy
+      @event.destroy
     else
       redirect_to login_path
     end

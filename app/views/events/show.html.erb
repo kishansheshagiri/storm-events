@@ -100,4 +100,5 @@
     end
   %>
   <%= link_to 'Back to Events', event_path, class: "btn btn-primary" %>
+  <%= link_to_if(logged_in?, 'X', @event, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger") %>
 </p>
