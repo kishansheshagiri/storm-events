@@ -1,0 +1,193 @@
+CREATE DATABASE storm_event_data;
+USE storm_event_data;
+CREATE TABLE events (
+    id INT UNSIGNED PRIMARY KEY,
+		type VARCHAR(50) NOT NULL,
+    begin_time DATETIME,
+    end_time DATETIME,
+		state_fips INT,
+		county_fips INT,
+    source VARCHAR(30) NOT NULL,
+		forecast_office CHAR(3),
+		magnitude FLOAT(5,2),
+		magnitude_type CHAR(2),
+		property_damage FLOAT(10,2),
+		crop_damage FLOAT(10,2),
+		narrative VARCHAR(5000) 
+		episode_id INT UNSIGNED,
+    CONSTRAINT episode_id_constraint FOREIGN KEY (episode_id)
+			REFERENCES episodes(id)
+			ON DELETE SET NULL
+			ON UPDATE CASCADE
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/details.csv"
+    INTO TABLE events
+    COLUMNS
+      TERMINATED BY ','
+      OPTIONALLY ENCLOSED BY '"'
+      ESCAPED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (id, type, begin_time, end_time, state_fips, county_fips, source, forecast_office, @mag, @mag_type, @property, @crop, narrative, episode_id)
+    set magnitude = if(@mag="", null, @mag),
+        magnitude_type = if(@mag_type="", null, @mag_type),
+		    property_damage = if(@property="", null, @property),
+        crop_damage = if(@crop="", null, @crop), 
+        created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE episodes (
+    id INT UNSIGNED PRIMARY KEY,
+    narrative VARCHAR(10000)
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/episodes.csv"
+    INTO TABLE episodes
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (id, description)
+    set created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE states (
+		id TINYINT UNSIGNED PRIMARY KEY NOT NULL,
+		name VARCHAR(30),
+		short_code CHAR(2) UNIQUE
+) ENGINE = INNODB;
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/states.csv"
+		INTO TABLE us_states
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (id, name,short_code)
+    set created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE counties (
+		id INT NOT NULL,
+		fips TINYINT UNSIGNED NOT NULL,
+		us_state_id TINYINT UNSIGNED NOT NULL,
+		name VARCHAR(30),
+		timezone VARCHAR(6),
+		CONSTRAINT state_constraint FOREIGN KEY (state_fips)
+			REFERENCES states(id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/counties.csv"
+    INTO TABLE counties
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (id, fips, us_state_id, name, timezone)
+    set created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE forecast_offices (
+		id CHAR(3) PRIMARY KEY,
+		name CHAR(35),
+		us_state_id INT UNSIGNED,
+		CONSTRAINT state_code_constraint FOREIGN KEY (us_state_id)
+			REFERENCES us_states(id)
+			ON DELETE SET NULL
+			ON UPDATE CASCADE
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/WFO.csv"
+    INTO TABLE forecast_offices
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+		(id, name, @code)
+    set us_state_id = if(@code="", null, @code),
+        created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE locations (
+		id INT AUTO_INCREMENT PRIMARY KEY,
+		event_id INT,
+		location_index TINYINT UNSIGNED,
+		loc_range FLOAT(5,2),
+		azimuth VARCHAR(3),
+		location VARCHAR(50),
+		latitude FLOAT(7,4),
+		longitude FLOAT(7,4),
+		CONSTRAINT event_id_constraint FOREIGN KEY(event_id)
+			REFERENCES events(id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/locations.csv"
+    INTO TABLE locations
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+    (id, event_id, location_index, loc_range, azimuth, location, latitude, longitude)
+    set created_at = now(),
+        updated_at = now()
+;
+
+CREATE TABLE fatalities (
+		id INT PRIMARY KEY,
+		date DATETIME,
+		age TINYINT UNSIGNED,
+		sex CHAR(1),
+		location VARCHAR(40),
+		event_id INT NOT NULL,
+		CONSTRAINT fatality_event_id_constraint FOREIGN KEY(event_id)
+			REFERENCES events(id)
+			ON DELETE CASCADE
+			ON UPDATE CASCADE
+);
+
+LOAD DATA INFILE "/Users/kishansheshagiri/workspace/csce608/datasets/fatalities.csv"
+    INTO TABLE fatalities
+    FIELDS
+      TERMINATED BY ','
+      ENCLOSED BY '"'
+    LINES
+      TERMINATED BY '\r\n'
+    IGNORE 1 LINES
+		(id, date, @fat_age, @fat_sex, @fat_location, event_id)
+    	set age = if(@fat_age="", null, @fat_age),
+    			sex = if(@fat_sex="", "U", @fat_sex),
+    			location = if(@fat_location="", "Unknown", @fat_location)
+;
+
+alter table locations drop foreign key fk_rails_6d9dbe77fc;
+alter table locations add constraint fk_rails_6d9dbe77fc foreign key (event_id) references events(id) on delete cascade on update cascade;
+SELECT
+  TABLE_NAME,
+  COLUMN_NAME,
+  CONSTRAINT_NAME, 
+  REFERENCED_TABLE_NAME,
+  REFERENCED_COLUMN_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE
+  REFERENCED_TABLE_NAME = 'fatalities';
