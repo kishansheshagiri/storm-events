@@ -1,24 +1,8 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Storm Events Reporter show all the recent storm events.
 
-Things you may want to cover:
+URL: https://storm-events.herokuapp.com/
 
-* Ruby version
+This page is developed as class project for CSCE608 Database Systems. 
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
